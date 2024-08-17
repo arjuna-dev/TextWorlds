@@ -6,11 +6,11 @@ from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
-chat = ChatOpenAI(model="gpt-4o")
+chat = ChatOpenAI(model="gpt-4o", model_kwargs={"response_format": {"type": "json_object"}})
 parser = StrOutputParser()
 
 opening_prompt_template = '''
-        Let's play a text-based RPG. First we'll set the stage for my adventure. You will write part of the story and at the end of your response you will give 3 choices to continue the story. The 4th option will be to regenerate what you just wrote. You will also leave a 5th option open for the user to tell you how to drive the story. We'll first crate the mood and setting if the story: 
+        You will return a JSON with one key "answer" and a second one called "compressed_answer" which is aggressively compressed and summarized in a way that you can read it but it doesn't need to be human-readable. Let's play a text-based RPG. First we'll set the stage for my adventure. You will write part of the story and at the end of your response you will give 3 choices to continue the story. The 4th option will be to regenerate what you just wrote. You will also leave a 5th option open for the user to tell you how to drive the story. We'll first crate the mood and setting if the story: 
 
         Setting/mood (e.g. sci-fi, cute animals): {story_setting}
 
